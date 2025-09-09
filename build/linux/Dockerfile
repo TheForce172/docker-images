@@ -23,7 +23,7 @@ RUN apt-get -yq update && apt-get -yq install \
 	cmake-data=3.28.1-0kitware1ubuntu20.04.1 \
 	ninja-build libopenal-dev libreadline6-dev libpng-dev libjpeg62-dev \
 	liblua5.1-0-dev libjansson-dev libsdl2-dev libfreetype6-dev valgrind g++-9 g++-13 \
-	python3.8 python3.8-dev libxcb-glx0-dev
+	python3.10 python3.10-dev libxcb-glx0-dev
 
 RUN if [ "$TARGETARCH" = "amd64" ]; then apt-get -yq install \
 	libvulkan-dev vulkan-headers vulkan-validationlayers libvulkan1 shaderc glslang-tools; \
@@ -37,12 +37,11 @@ RUN cd /tmp/ccache && make install
 
 # aqt needs at least python 3.7 so we install something that is "good enough" for that. Ubuntu 18.04 does not have a lot of support anymore unfortunately
 COPY get-pip.py /tmp/get-pip.py
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1 && \
 	python3 /tmp/get-pip.py && \
 	mkdir -p /qt && cd /qt && \
-	pip3 -vvv install aqtinstall==3.0.3 && \
-	aqt install-qt linux desktop 5.12.12 gcc_64
-
+	pip3 -vvv install aqtinstall==3.3.0 && \
+	aqt install-qt linux desktop 6.9.1 linux_gcc_64
 RUN rm -rf /tmp/*
 
 COPY ./appimagetool-${TARGETARCH}/ /tools/appimagetool/
