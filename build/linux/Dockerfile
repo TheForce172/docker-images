@@ -37,10 +37,15 @@ RUN cd /tmp/ccache && make install
 
 # aqt needs at least python 3.7 so we install something that is "good enough" for that. Ubuntu 18.04 does not have a lot of support anymore unfortunately
 COPY get-pip.py /tmp/get-pip.py
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
-	python3 /tmp/get-pip.py && \
-	mkdir -p /qt && cd /qt && \
-	pip3 -vvv install aqtinstall==3.0.3 && \
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 
+RUN \
+	python3 /tmp/get-pip.py 
+RUN \
+	mkdir -p /qt 
+RUN cd /qt 
+RUN \
+	pip3 -vvv install aqtinstall==3.0.3 
+RUN \
 	aqt install-qt linux desktop 5.12.12 gcc_64 -m qttools
 RUN rm -rf /tmp/*
 
