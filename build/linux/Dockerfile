@@ -41,8 +41,7 @@ RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 
 	python3 /tmp/get-pip.py && \
 	mkdir -p /qt && cd /qt && \
 	pip3 -vvv install aqtinstall==3.0.3 && \
-	aqt install-qt linux desktop 5.12.12 gcc_64
-
+	aqt install-qt linux desktop 5.12.12 gcc_64 -m qttools
 RUN rm -rf /tmp/*
 
 COPY ./appimagetool-${TARGETARCH}/ /tools/appimagetool/
